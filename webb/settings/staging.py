@@ -2,6 +2,8 @@ import copy
 
 from .common import *
 from .partials.util import get_secret
+from djangoplicity.contentserver import CDN77ContentServer
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = "sssmvx$i1sv4k*g+nwfnx*3a1g&)^i6r9n6g4=f_$x^u(kwt8s"
 
@@ -89,11 +91,8 @@ MEDIA_CONTENT_SERVERS = {
         password=get_secret('CDN_STORAGE_PASSWORD'),
         api_login=get_secret('CDN_API_LOGIN'),
         api_password=get_secret('CDN_API_PASSWORD'),
-        apiv3_token=get_secret('CDN_API_TOKEN'),
         cdn_id='1495410064',
-        cdnv3_id='1495410064',
         cdn_id_bigfiles='1084865783',
-        cdnv3_id_bigfiles='1084865783',
         aws_access_key_id=get_secret('AWS_ACCESS_KEY_ID'),
         aws_secret_access_key=get_secret('AWS_SECRET_ACCESS_KEY'),
         aws_storage_bucket_name=get_secret('AWS_STORAGE_BUCKET_NAME'),
