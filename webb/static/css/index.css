@@ -610,3 +610,11 @@ h6,
   font-size: 1rem;
   border-radius: .25rem;
 }
+
+.rss-icon{
+  color: #009bdb;
+}
+
+.rss-icon:hover{
+  color: #fff;
+}
