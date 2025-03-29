@@ -47,9 +47,9 @@ DEBUG_TOOLBAR_PANELS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hubble',
-        'USER': 'hubble',
-        'PASSWORD': 'hubble',
+        'NAME': 'webb',
+        'USER': 'webb',
+        'PASSWORD': 'webb',
         'HOST': 'webb-db',
         'PORT': 5432,
     }
@@ -61,7 +61,7 @@ DATABASES = {
 CACHES = {
     'notdefault': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'KEY_PREFIX': 'hubble',
+        'KEY_PREFIX': 'webb',
         'LOCATION': [
             'cache:11211',
         ],
