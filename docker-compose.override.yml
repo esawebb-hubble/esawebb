@@ -66,13 +66,13 @@ services:
     hostname: cache
 
   db:
-    image: postgres:10.5
+    image: postgres:16
     container_name: webb-db
     restart: "no"
     environment:
-      POSTGRES_DB: hubble
-      POSTGRES_USER: hubble
-      POSTGRES_PASSWORD: hubble
+      POSTGRES_DB: webb
+      POSTGRES_USER: webb
+      POSTGRES_PASSWORD: webb
     ports:
       - "50000:5432"
     volumes:
