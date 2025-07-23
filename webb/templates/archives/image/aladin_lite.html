@@ -51,7 +51,7 @@ function onVrViewLoad() {
             // we must return true, so that the default action (set view to center of image) is performed
             return true;
         };
-        aladin.displayJPG('https://cdn.esawebb.org/archives/images/screen/pillarsofcreation_composite.jpg', null, callback);
+        aladin.displayJPG('{{ SITE_DOMAIN }}{{ object.resource_screen.url }}', null, callback);
 
         var syncImageAlpha = function(value) {
             aladin.getOverlayImageLayer().setAlpha(value);
