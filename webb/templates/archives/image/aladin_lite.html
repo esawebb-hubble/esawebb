@@ -27,14 +27,14 @@
     </div>
 
     <div>
-        <input id="DSS" type="radio" name="survey" value="P/DSS2/color" checked>
+        <input id="DSS" type="radio" name="survey" value="P/DSS2/color" >
         <label for="DSS" style="margin-left: 5px;">{% trans 'Optical (DSS2)' %}</label><br>
-        <input id="2MASS" type="radio" name="survey" value="P/2MASS/color">
+        <input id="2MASS" type="radio" name="survey" value="P/2MASS/color" checked>
         <label for="2MASS" style="margin-left: 5px;">{% trans 'Infrared (2MASS)' %}</label>
     </div>
 
-    <div>
-        <label for="slider">{% trans 'Crossfade image:' %}</label>
+    <div style="display: flex; align-items: center;">
+        <label for="slider" style="margin-right: 10px;">{% trans 'Crossfade image:' %}</label>
         <input id="slider" type="range" value="1" min="0" max="1" step="0.05" style="width:120px;">
     </div>
 </div>
@@ -46,7 +46,7 @@ function onVrViewLoad() {
     A.init.then(function() {
         aladin = A.aladin('#aladin-lite-div', {target: "0 0",fov: 100, cooFrame: 'ICRS', fullscreen: true});
 
-        aladin.setBaseImageLayer("P/DSS2/color");
+        aladin.setBaseImageLayer("P/2MASS/color");
         var callback = function(ra, dec, fov) {
             // we must return true, so that the default action (set view to center of image) is performed
             return true;
