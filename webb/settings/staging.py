@@ -90,7 +90,7 @@ MEDIA_CONTENT_SERVERS = {
                 'cylindrical_16kmaster',
                 'news',
                 'qhd_1440p25_screen',
-                '8k_4320p25_screen',
+                'eightk_4320p25_screen',
                 'm_hd_1080p_screen',
                 'm_ultra_hd_screen',
             ),
