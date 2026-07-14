@@ -493,7 +493,7 @@ ARCHIVES = (
     ('djangoplicity.newsletters.models.Newsletter', 'djangoplicity.newsletters.options.NewsletterOptions'),
 )
 
-ARCHIVE_EMBARGO_LOGIN = ('stageweic', 'esawebb-stageweic2026confidential')
+ARCHIVE_EMBARGO_LOGIN = ('stageweic', 'confidential_esawebb-stageweic2026x')
 ARCHIVE_EMAIL_SENDER = "ESA/Webb Information Centre <web@esawebb.org>"
 
 ARCHIVE_URL_QUERY_PREFIX = 'archive'
