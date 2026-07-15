@@ -2,15 +2,17 @@
 
 {% block content_area %}
 
-<div class="container" id="body">
-<div class="row no-page">
-    <div class="col-md-12">
-        {% block archive_search %}
-        {% endblock %}
-    </div>
-</div>
-{% block body %}
-{% endblock %}
+<div class="container" id="page-content">
+    <search>
+        <div class="row no-page">
+            <div class="col-md-12">
+                {% block archive_search %}
+                {% endblock %}
+            </div>
+        </div>
+    </search>
+    {% block body %}
+    {% endblock %}
 </div>
 
 {% endblock %}
