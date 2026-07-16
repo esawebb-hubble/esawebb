@@ -19,13 +19,14 @@
 {% endblock %}
 
 {% block content_area %}
+
 <!-- Carrusel prueba -->
 {% if releases %}
 <section class="section">
     <div class="container mt-2">
-        <header class="mb-3 px-5">
+        <header class="mb-3 px-5 d-lg-none d-md-none">
             <a href="/news/">
-                <h2 class="lined lined-center text-uppercase text-primary" style="color: #009bdb !important;">Press Releases</h2>
+                <h4 class="lined lined-center text-uppercase text-primary" style="color: #009bdb !important;">Press Releases</h4>
             </a>
         </header>
 
@@ -36,7 +37,7 @@
                 <div class="box-image shadow  border">
                     <div class="mb-4 primary-overlay">
                         <a href="{{ release.get_absolute_url }}">
-                            <img src="https://cdn.esawebb.org/archives/images/banner1920/weic2615a.jpg" alt="{{ release.title }}"
+                            <img src="{{ release.main_image.resource_wallpaper1.url }}" alt="{{ release.title }}"
                             class="img-fluid -top" style=" object-fit: cover;" />
                         </a>
                     </div>
@@ -53,7 +54,6 @@
         </div>
         
         <!--Carrusel-->
-        <!-- 2. Removed data-bs-ride="carousel" to prevent auto-playing, complying with WCAG 2.2.2 -->
         <div id="carouselExampleCaptions" class="carousel slide sm-none">
             <div class="row carousel-indicators mt-3 mb-0 mx-4">
                 <div class="col-2"></div>
@@ -63,8 +63,7 @@
                         data-bs-target="#carouselExampleCaptions" 
                         data-bs-slide-to="{{ forloop.counter0 }}"
                         class="{% if forloop.first %}active{% endif %}"
-                        aria-current="true" 
-                        aria-label="Go to slide {{ forloop.counter }}: {{ release.title }}">
+                        aria-current="true" aria-label="Go to slide {{ forloop.counter }}: {{ release.title }}">
                     </button>
                     {% endfor %}
                 </div>
@@ -77,7 +76,7 @@
                 {% for release in releases %}
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
                     <a href="{{ release.get_absolute_url }}">
-                        <img src="https://cdn.esawebb.org/archives/images/banner1920/weic2615a.jpg"
+                        <img src="{{ release.main_image.resource_banner1920.url }}"
                     class="d-block w-100" alt="{{ release.title }}">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>{{ release.title }}</h5>
@@ -109,7 +108,7 @@
     <div class="container py-2 my-2">
         <header class="mb-3 px-5">
             <a href="/images/potm/">
-                <h2 class="lined lined-center text-uppercase text-primary" style="color: #009bdb !important;">Picture of the Month</h2>
+                <h3 class="lined lined-center text-uppercase text-primary" style="color: #009bdb !important;">Picture of the Month</h3>
             </a>
         </header>
         <div class="row px-3">
@@ -118,7 +117,7 @@
                 <div class="box-image shadow  border">
                     <div class="mb-4 primary-overlay">
                         <a href="{{ potm.get_absolute_url }}" aria-hidden="true" tabindex="-1">
-                            <img src="https://cdn.esawebb.org/archives/images/wallpaper1/potm2606a.jpg" alt="{{ potm.visual.title }}"
+                            <img src="{{ potm.visual.resource_wallpaper1.url }}" alt="{{ potm.visual.title }}"
                             class="img-fluid -top" style=" object-fit: cover;" />
                         </a>
                     </div>
@@ -143,7 +142,7 @@
         <div class="container py-2 my-2">
             <header class="mb-3 px-5">
                 <a href="/announcements/">
-                    <h2 class="lined lined-center text-uppercase text-primary" style="color: #009bdb !important;">Announcements</h2>
+                    <h3 class="lined lined-center text-uppercase text-primary" style="color: #009bdb !important;">Announcements</h3>
                 </a>
             </header>
             <div class="row px-3">
@@ -181,7 +180,7 @@
         <div id="potw-carousel-wrapper" class="my-5">
             {% for high in highlights %}
             {% if high.name == 'SpaceSparks' %}
-            <h2 class="lined lined-center text-uppercase text-primary col-12 col-lg-7 col-xl-8 my-3">{{ high.title }}</h2>
+            <h3 class="lined lined-center text-uppercase text-primary col-12 col-lg-7 col-xl-8 my-3">{{ high.title }}</h3>
             {% endif %}
             {% endfor %}
             <div id="potw-carousel">
@@ -205,7 +204,7 @@
         <div id="potw-carousel-wrapper" class=" my-5">
             {% for high in highlights %}
             {% if high.name == 'ScienceNewsletter' %}
-            <h2 class="lined lined-center text-uppercase text-primary col-12 col-lg-7 col-xl-8 my-3">{{ high.title }}</h2>
+            <h3 class="lined lined-center text-uppercase text-primary col-12 col-lg-7 col-xl-8 my-3">{{ high.title }}</h3>
             {% endif %}
             {% endfor %}
             <div id="potw-carousel">
