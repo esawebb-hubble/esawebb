@@ -10,14 +10,14 @@
 
             {% for pr in row %}
                 <div class="col-md-6 col-xl-4 col-xs-12">
-                    <a href="{{ pr.get_absolute_url }}" style="text-decoration: none;">
+                    <a href="{{ pr.get_absolute_url }}" style="text-decoration: none;" aria-label="{{ pr.title }}">
                         <div class="box-image shadow  border my-3">
                             {% if pr.main_image and pr.main_image.resource_thumb350x %}
                                 <div class="mb-4 primary-overlay">
                                     <img src="{{ pr.main_image.resource_thumb350x.url }}" class="w-100" style="height: 200px; object-fit: cover;" alt="{{ pr.main_image.title }}">
                                 </div>
                             {% endif %}
-                            <div class="pb-3 px-3" style="height: 290px; overflow: hidden; text-overflow: ellipsis;">
+                            <div class="pb-3 px-3" style="min-height: 290px; overflow: hidden; text-overflow: ellipsis;">
                                 <div class="news-id h6  text-primary">
                                     {{ pr.id }} — {% trans pr.release_type.name %}
                                 </div>
@@ -28,7 +28,7 @@
                                 </div>
                             </div>
                             <div class="news-readmore text-center">
-                                <p class="btn btn-primary mt-3">{% trans "Read more" %}</p>
+                                <p class="btn btn-primary mt-3" aria-hidden="true">{% trans "Read more" %}</p>
                             </div>
                         </div>
                     </a>
