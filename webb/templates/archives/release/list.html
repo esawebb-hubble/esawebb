@@ -40,7 +40,7 @@
                         {{ archive|capfirst }}{% trans "Archive" %}
                     {% endif %}
                     {% if listview_feed_url %}
-                        <a href="{{ listview_feed_url }}" class="listviewrsslink"><span class="fa fa-rss"></span></a>
+                        <a href="{{ listview_feed_url }}" class="listviewrsslink" aria-label="{% trans 'RSS Feed' %}"><span class="fa fa-rss" aria-hidden="true"></span></a>
                     {% endif %}
                 </h1>
 

@@ -23,8 +23,8 @@
 
 {% if object.kids_title and object.kids_description %}
     <div style="float: right; margin-top: 15px;">
-        <a href="kids/" class="noicon" title="Kids">
-            <img src="{{ MEDIA_URL }}/app/djangoplicity/kids/unawe-flag-en.png" alt="Kids" class="nopadding">
+        <a href="kids/" class="noicon" title="View kids version" aria-label="View kids version of this content">
+            <img src="{{ MEDIA_URL }}/app/djangoplicity/kids/unawe-flag-en.png" alt="" class="nopadding">
         </a>
     </div>
 {% endif %}
@@ -61,8 +61,8 @@
             {% endif %}
         {% elif main_image %}
             {% if main_image.resource_newsfeature %}
-                <a href="{{ main_image.resource_screen.url }}" title="{{ main_image.title }}">
-                    <img src="{{ main_image.resource_newsfeature.url }}" class="w-100" style="height: auto; max-width: 100%; object-fit: cover;" alt="{{ main_image.title }}"/>
+                <a href="{{ main_image.resource_screen.url }}" title="{{ main_image.title }}" aria-label="View larger image: {{ main_image.title }}">
+                    <img src="{{ main_image.resource_newsfeature.url }}" class="w-100" style="height: auto; max-width: 100%; object-fit: cover;" alt=""/>
                 </a>
             {% endif %}
         {% endif %}
@@ -70,7 +70,7 @@
             {% for im in images %}
                 {% if main_image != im %}
                     <a class="popup" href="{{ im.resource_screen.url }}"
-                       title="{{ im.title }}" class="hidden">
+                       title="{{ im.title }}" aria-label="{{ im.title }}">
                     </a>
                 {% endif %}
             {% endfor %}
