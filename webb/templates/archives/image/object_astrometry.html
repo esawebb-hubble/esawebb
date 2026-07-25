@@ -89,8 +89,8 @@
 
     {% if object.spatial_quality %}
         <div id="object_astrometry_div" class="object-info">
-            <h3>{% trans "Coordinates" %}</h3>
-            <table class="table form-text text-dark" aria-describedby="Object coordinates">
+            <h3 id="coordinates-heading">{% trans "Coordinates" %}</h3>
+            <table class="table form-text text-dark" aria-labelledby="coordinates-heading">
                 {% if object.get_ra_verbose %}
                     <tr>
                         <th scope="row" class="title">{% trans "Position (RA)" %}:</th>
@@ -119,7 +119,7 @@
                                 compass_src = "{% static 'djangoplicity/images/widgets/compassm.png' %}";
                                 spatial_rotation = {{ object.spatial_rotation }};
                             </script>
-                            <canvas id="compass_canvas" width="240" height="140"></canvas>
+                            <canvas id="compass_canvas" width="240" height="140" role="img" aria-label="Compass graphic indicating image orientation. North is {{ object.get_spatial_rotation_verbose|safe }}."></canvas>
                         {% endif %}
                     </div>
 
@@ -130,8 +130,8 @@
                                 <div class="wwtlink">
                                     <div>{% trans "View in ESASky" %}:</div>
                                     <div class="d-flex justify-content-center" style="padding: 5px 0 5px 0;">
-                                        <a href="{{ esaskylink }}" title="View in ESASky">
-                                            <img src="{% static 'images/esasky.png' %}" width="200" alt="View in ESASk"/>
+                                        <a href="{{ esaskylink }}" title="View in ESASky" aria-label="View in ESASky">
+                                            <img src="{% static 'images/esasky.png' %}" width="200" alt=""/>
                                         </a>
                                     </div>
                                 </div>
@@ -145,8 +145,8 @@
                             <div class="wwtlink">
                                 <div>{% trans "View in WorldWide Telescope" %}:</div>
                                 <div>
-                                    <a href="{{ wwtlink }}" title="View in WorldWide Telescope">
-                                        <img class="img-fluid" src="{% static 'images/wwt.png' %}" alt="View in WorldWide Telescope"/>
+                                    <a href="{{ wwtlink }}" title="View in WorldWide Telescope" aria-label="View in WorldWide Telescope">
+                                        <img class="img-fluid" src="{% static 'images/wwt.png' %}" alt=""/>
                                     </a>
                                 </div>
                             </div>

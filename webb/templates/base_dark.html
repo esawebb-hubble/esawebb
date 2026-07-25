@@ -28,7 +28,7 @@ We don't display the children pages widget in the dark pages
             <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8 ">
                 <h1 style="color: white">{% if archive_title %}{% trans archive_title %}{% else %}{{ archive|capfirst }} {% trans "Archive"%}{% endif %}
                     {% if listview_feed_url %} 
-                    <a href="{% if archive == 'image' %} https://feeds.feedburner.com/esawebb/images/ {% elif archive == 'video' %} https://feeds.feedburner.com/esawebb/videos/ {% endif %} " class="rss-icon">
+                    <a href="{% if archive == 'image' %} https://feeds.feedburner.com/esawebb/images/ {% elif archive == 'video' %} https://feeds.feedburner.com/esawebb/videos/ {% endif %} " class="rss-icon" aria-label="{% trans 'RSS Feed' %}">
                         <i class="fa fa-rss" aria-hidden="true"></i>
                     </a>
                     {% endif %}
@@ -42,12 +42,12 @@ We don't display the children pages widget in the dark pages
         {% if web_categories %}
             <div class="row">
                 <div class="form-text ms-1">
-                    {% if archive == 'image' %}<a
+                    {% if archive == 'image' %}<a aria-label="{% trans 'View All Images' %}"
                         class="me-3 border border-white btn-outline-primary p-1 mt-2 d-inline-block"
                         style="text-decoration: none; font-size: 1rem !important; color: white"
                         href="{% url 'images_defaultquery' %}{% if params_nosearch %}?{{ params_nosearch }}{% endif %}">{% trans "View All" %}</a>
                         {% endif %}
-                    {% if archive == 'video' %}<a
+                    {% if archive == 'video' %}<a aria-label="{% trans 'View All Videos' %}"
                         class="me-3 border border-white btn-outline-primary p-1 mt-2 d-inline-block"
                         style="text-decoration: none; font-size: 1rem !important; color: white"
                         href="{% url 'videos_defaultquery' %}{% if params_nosearch %}?{{ params_nosearch }}{% endif %}">{% trans "View All" %}</a>
@@ -56,23 +56,23 @@ We don't display the children pages widget in the dark pages
                     <a class="me-3 border border-white btn-outline-primary p-1 mt-2 d-inline-block"
                         style="text-decoration: none; font-size: 1rem !important; color: white"
                         href="{{ category.get_absolute_url}}{% if params_nosearch %}?{{ params_nosearch }}{% endif %}"
-                        {% if category.selected %} class="selected" {% endif %}>{% trans category.name %}</a>
+                        {% if category.selected %} class="selected" aria-current="page" {% endif %}>{% trans category.name %}</a>
                     {% endfor %}
                 </div>
             </div>
             {% endif %}
             <div class="text-end">
                 <div title="{% trans 'Sort by:' %}">
-                    <span class="me-3" style="color: white">Sort by:  </span>
-                    <a  style="text-decoration: none; font-size: 1rem !important; color: white"
+                    <span class="me-3" style="color: white">{% trans "Sort by:" %}  </span>
+                    <a aria-label="{% trans 'Sort by Ranking' %}" style="text-decoration: none; font-size: 1rem !important; color: white"
                         href="{{ request.path }}?{{params_nosort}}"{% if not request.GET.sort %} 
                         class="me-3 border border-primary btn-primary p-1 mt-2 d-inline-block"
                         {% else %}
                         class="me-3 border border-white btn-outline-primary p-1 mt-2 d-inline-block"
                         {% endif %}>{% trans "Ranking" %}</a>
-                    <a  style="text-decoration: none; font-size: 1rem !important; color: white"
+                    <a aria-label="{% trans 'Sort by Date' %}" style="text-decoration: none; font-size: 1rem !important; color: white"
                         href="{{ request.path }}?{{params_nosort}}&sort=-release_date"{% if request.GET.sort == '-release_date' %} 
-                        class="me-3 border border-white btn-primary p-1 mt-2 d-inline-block"
+                        class="me-3 border border-white btn-primary p-1 mt-2 d-inline-block" aria-current="true"
                         {% else %}
                         class="me-3 border border-white btn-outline-primary p-1 mt-2 d-inline-block"
                         {% endif %}>{% trans "Date" %}</a>
