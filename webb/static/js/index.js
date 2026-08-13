@@ -96,8 +96,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     // Initialize Bootstrap Popovers
     const popoverTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="popover"]'));
-
     popoverTriggerList.forEach(function (popoverTriggerEl) {
-        new bootstrap.Popover(popoverTriggerEl);
+      bootstrap.Popover.getOrCreateInstance(popoverTriggerEl);
     });
 });
