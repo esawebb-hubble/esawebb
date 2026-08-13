@@ -4,7 +4,7 @@
         {% for info in info_groups %}
             {% if info.links or info.metadata %}
                 {% if info.name %}
-                    <h4>
+                    <h4 id="{% trans info.name %}">
                         {% if info.name == 'About the Video Conference Background' %}
                             Virtual Meeting Backgrounds
                         {% elif info.name == 'About the Image Comparison' %}
