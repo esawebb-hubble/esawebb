@@ -31,9 +31,9 @@
 <script src="{% static 'magnific-popup/jquery.magnific-popup.min.js' %}"></script>
 
 <div class="bg-image hover-overlay ripple shadow-1-strong rounded my-3 px-1 popup-link" data-ripple-color="light">
-    <a href="https://cdn.esawebb.org/archives/images/screen/{{ object.pk }}.jpg" title="{{ object.title }}">
+    <a href="https://cdn.esawebb.org/archives/images/screen/{{ object.pk }}.jpg" title="{{ object.title }}" aria-label="{% trans 'View larger image:' %} {{ object.title }}">
         <img src="https://cdn.esawebb.org/archives/images/screen/{{ object.pk }}.jpg" class="w-100"
-             alt="{{ object.title }}" style="height: auto; max-width: 100%; object-fit: cover;"/>
+             alt="" style="height: auto; max-width: 100%; object-fit: cover;"/>
     </a>
 </div>
 

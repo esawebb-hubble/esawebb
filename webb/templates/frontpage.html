@@ -22,7 +22,7 @@
 
 <!-- Carrusel prueba -->
 {% if releases %}
-<div class="section">
+<section class="section">
     <div class="container mt-2">
         <header class="mb-3 px-5 d-lg-none d-md-none">
             <a href="/news/">
@@ -42,11 +42,11 @@
                         </a>
                     </div>
                     <div class="text-center pb-3" >
-                        <h5 class="new-title h6 text-capitalize text-primary mx-2 mb-0" style="height: 40px;">
+                        <h5 class="new-title h6 text-capitalize text-primary mx-2 mb-0" style="min-height: 40px;">
                             <a class="text-reset" href="{{ release.get_absolute_url }}" style="text-decoration: none;">{{ release.title }}</a>
                         </h5>
                         <p class="small text-muted mt-3">{{ release.release_date|date:"j N Y" }} — {{ release.id }}</p>
-                        <a class="btn btn-primary" href="{{ release.get_absolute_url }}">Read More</a>
+                        <a class="btn btn-primary" href="{{ release.get_absolute_url }}" aria-label="Read more about {{ release.title }}">Read More</a>
                     </div>
                 </div>
             </div>
@@ -54,21 +54,21 @@
         </div>
         
         <!--Carrusel-->
-        <div id="carouselExampleCaptions" class="carousel slide sm-none" data-bs-ride="carousel">
+        <div id="carouselExampleCaptions" class="carousel slide sm-none">
             <div class="row carousel-indicators mt-3 mb-0 mx-4">
                 <div class="col-2"></div>
                 <div class="col-8 ps-4 justify-content-center align-items-center d-none d-sm-flex">
                     {% for release in releases %}
                     <button type="button"
-                        data-bs-target="#{{carouselExampleCaptions}}" 
+                        data-bs-target="#carouselExampleCaptions" 
                         data-bs-slide-to="{{ forloop.counter0 }}"
                         class="{% if forloop.first %}active{% endif %}"
-                        aria-current="true" aria-label="Slide 1">
+                        aria-current="true" aria-label="Go to slide {{ forloop.counter }}: {{ release.title }}">
                     </button>
                     {% endfor %}
                 </div>
                 <div class="col-2 pb-2 d-none d-md-block">
-                    <a href="/news/"><button class="btn btn-primary" style="color: #fff; opacity: 80%; font-size: 12px;">Explore all Press Releases</button></a>
+                    <a href="/news/" class="btn btn-primary" style="color: #fff; opacity: 80%; font-size: 12px;">Explore all Press Releases</a>
                 </div>
                 
             </div>
@@ -98,13 +98,13 @@
             </button>
         </div>
     </div>
-</div>
+</section>
 {% endif %}
 <!-- End carrusel -->
 
 <!-- Picture of the month -->
 {% if potms %}
-<section class=" ">
+<section>
     <div class="container py-2 my-2">
         <header class="mb-3 px-5">
             <a href="/images/potm/">
@@ -116,17 +116,17 @@
             <div class="col-lg-3 col-md-6 mb-3">
                 <div class="box-image shadow  border">
                     <div class="mb-4 primary-overlay">
-                        <a href="{{ potm.get_absolute_url }}">
+                        <a href="{{ potm.get_absolute_url }}" aria-hidden="true" tabindex="-1">
                             <img src="{{ potm.visual.resource_wallpaper1.url }}" alt="{{ potm.visual.title }}"
                             class="img-fluid -top" style=" object-fit: cover;" />
                         </a>
                     </div>
                     <div class="text-center pb-3" >
-                        <h5 class="new-title h6 text-capitalize text-primary mx-2 mb-0" style="height: 40px;">
-                            <a class="text-reset" href="{{ potm.get_absolute_url }}" style="text-decoration: none;">{{ potm.visual.title }}</a>
+                        <h5 class="new-title h6 text-capitalize text-primary mx-2 mb-0" style="min-height: 40px;">
+                            <a class="text-reset" href="{{ potm.get_absolute_url }}" style="text-decoration: none;" aria-hidden="true" tabindex="-1">{{ potm.visual.title }}</a>
                         </h5>
                         <p class="small text-muted mt-3">{{ potm.release_date|date:"j N Y" }} — {{ potm.id }}</p>
-                        <a class="btn btn-primary" href="{{ potm.get_absolute_url }}">Read More</a>
+                        <a class="btn btn-primary" href="{{ potm.get_absolute_url }}" aria-label="Read more about {{ potm.visual.title }}">Read More</a>
                     </div>
                 </div>
             </div>
@@ -136,13 +136,10 @@
 </section>
 {% endif %}
 
-<div class="" id="body">
-
 <!-- announcements -->
 {% if announcements %}
-    <section class=" ">
+    <section>
         <div class="container py-2 my-2">
-
             <header class="mb-3 px-5">
                 <a href="/announcements/">
                     <h4 class="lined lined-center text-uppercase text-primary" style="color: #009bdb !important;">Announcements</h4>
@@ -153,24 +150,23 @@
                 <div class="col-lg-3 col-md-6 mb-3">
                     <div class="box-image shadow  border">
                         <div class="mb-4 primary-overlay">
-                            <a href="{{ announcement.get_absolute_url }}">
+                            <a href="{{ announcement.get_absolute_url }}" aria-hidden="true" tabindex="-1">
                                 <img src="{{ announcement.main_visual.resource_wallpaper1.url }}" alt="{{ announcement.main_visual.title }}"
                                 class="img-fluid -top" style="object-fit: cover;" />
                             </a>
                             
                         </div>
                         <div class="text-center pb-3" >
-                            <h5 class="new-title h6 text-capitalize text-primary mx-2 mb-0" style="height: 40px;">
-                                <a class="text-reset" href="{{ announcement.get_absolute_url }}" style="text-decoration: none;">{{ announcement.title }}</a>
+                            <h5 class="new-title h6 text-capitalize text-primary mx-2 mb-0" style="min-height: 40px;">
+                                <a class="text-reset" href="{{ announcement.get_absolute_url }}" style="text-decoration: none;" aria-hidden="true" tabindex="-1">{{ announcement.title }}</a>
                             </h5>
                             <p class="small text-muted mt-3">{{ announcement.release_date|date:"j N Y" }} — {{ announcement.id }}</p>
-                            <a class="btn btn-primary" href="{{ announcement.get_absolute_url }}">Read More</a>
+                            <a class="btn btn-primary" href="{{ announcement.get_absolute_url }}" aria-label="Read more about {{ announcement.title }}">Read More</a>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
-
         </div>
     </section>
 <!-- announcements -->
@@ -200,7 +196,7 @@
                 </div> <!-- slide -->
                 {% endif %}
                 {% endfor %}
-            </div> <!-- potw-carousel -->   
+            </div> <!-- sparks-carousel -->   
         </div>
         {% endif %}
         <!-- ESA/Hubble/Webb Science Newsletter -->
@@ -224,7 +220,7 @@
                 </div> <!-- slide -->
                 {% endif %}
                 {% endfor %}
-            </div> <!-- potw-carousel -->   
+            </div> <!-- newsletter-carousel -->   
         </div>
         {% endif %}
 
@@ -249,7 +245,7 @@
                 </div> <!-- slide -->
                 {% endif %}
                 {% endfor %}
-            </div> <!-- potw-carousel -->   
+            </div> <!-- webfirsts-carousel -->   
         </div>
         {% endif %}
 
@@ -373,8 +369,6 @@
         </div>
     </div>
 </div>
-
-</div> <!-- #body -->
 {% endblock content_area %}
 
 {% block extra_scripts %}

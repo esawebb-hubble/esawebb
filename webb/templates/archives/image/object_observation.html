@@ -48,8 +48,8 @@
         </style>
 
         <div id="object_observation_div" class="object-info">
-            <h3>{% trans "Colours & filters" %}</h3>
-            <table class="table table-striped table-condensed" aria-describedby="Colours & filters">
+            <h3 id="colours-filters-heading">{% trans "Colours & filters" %}</h3>
+            <table class="table table-striped table-condensed" aria-labelledby="colours-filters-heading">
                 <tr>
                     <th>{% trans "Band" %}</th>
                     {% if has_wavelength %}
@@ -63,6 +63,9 @@
                                 <span {% if e.spectral_color_assignment %} class="band_{{ e.spectral_color_assignment }}"{% endif %}>
                                     {% if e.spectral_band %}
                                         {% trans e.spectral_band %}
+                                    {% endif %}
+                                    {% if e.spectral_color_assignment %}
+                                        <span class="visually-hidden"> ({{ e.spectral_color_assignment }})</span>
                                     {% endif %}
                                 </span>
                                 {% if e.spectral_bandpass %}

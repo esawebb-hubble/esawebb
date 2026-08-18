@@ -4,7 +4,7 @@
 <div class="modal-body youtube-body">
     <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ object.youtube_video_id }}"
             class="youtube-video"
-            title="YouTube video player" style="border:none;"
+            title="{{ object.title }}" style="border:none;"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
     </iframe>
@@ -12,7 +12,7 @@
 {% if object.headline %}
     <p>{{ object.headline }}</p>
 {% endif %}
-<p>{{ object.description|safe }}</p>
+<div style="margin-top: 15px;">{{ object.description|safe }}</div>
 <strong>{% trans "Credit" %}:</strong>
 <div class="credit">{{ object.credit|safe }}</div>
 {% include 'archives/extra_footer.html' %}
