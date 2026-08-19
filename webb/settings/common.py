@@ -329,6 +329,7 @@ THIRD_PARTY_APPS = [
 WEBB_APPS = [
     'webb',
     'webb.frontpage',
+    'webb.rag_feed',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + DJANGOPLICITY_APPS + WEBB_APPS + THIRD_PARTY_APPS
