@@ -9,6 +9,8 @@ from djangoplicity.pages.models import Page
 from .serializers import PageRagFeedSerializer
 from djangoplicity.releases.models import Release
 from .serializers import ReleaseRagFeedSerializer
+from djangoplicity.announcements.models import Announcement
+from .serializers import AnnouncementRagFeedSerializer
 
 class RagFeedPagination(PageNumberPagination):
     """
@@ -51,6 +53,24 @@ class ReleaseListAPIView(ListAPIView):
         """
         now = timezone.now()
         return Release.objects.filter(
+            Q(published=True) &
+            (Q(release_date__isnull=True) | Q(release_date__lte=now))
+        ).order_by('-release_date')
+
+class AnnouncementListAPIView(ListAPIView):
+    """
+    View to expose the content of public Announcements.
+    """
+    serializer_class = AnnouncementRagFeedSerializer
+    pagination_class = RagFeedPagination
+
+    def get_queryset(self):
+        """
+        Filters the queryset to return only published announcements
+        that have passed their release date (embargo).
+        """
+        now = timezone.now()
+        return Announcement.objects.filter(
             Q(published=True) &
             (Q(release_date__isnull=True) | Q(release_date__lte=now))
         ).order_by('-release_date')

@@ -4,6 +4,7 @@ from rest_framework import serializers
 from bs4 import BeautifulSoup
 from djangoplicity.pages.models import Page
 from djangoplicity.releases.models import Release
+from djangoplicity.announcements.models import Announcement
 
 class RagFeedBaseSerializer(serializers.ModelSerializer):
     """
@@ -51,11 +52,30 @@ class ReleaseRagFeedSerializer(RagFeedBaseSerializer):
     """
     Serializer for the Release model (Press Releases).
     """
-    # En comunicados, la "fecha de creación/lanzamiento" es el release_date
     date_created = serializers.DateTimeField(source='release_date')
 
     class Meta(RagFeedBaseSerializer.Meta):
         model = Release
+        fields = RagFeedBaseSerializer.Meta.fields
+
+    def get_text_content(self, obj):
+        """
+        Extracts and cleans HTML content from the 'description' field.
+        """
+        html_content = getattr(obj, 'description', '')
+        if html_content:
+            soup = BeautifulSoup(html_content, 'html.parser')
+            return soup.get_text(separator=' ', strip=True)
+        return ''
+
+class AnnouncementRagFeedSerializer(RagFeedBaseSerializer):
+    """
+    Serializer for the Announcement model.
+    """
+    date_created = serializers.DateTimeField(source='release_date')
+
+    class Meta(RagFeedBaseSerializer.Meta):
+        model = Announcement
         fields = RagFeedBaseSerializer.Meta.fields
 
     def get_text_content(self, obj):
