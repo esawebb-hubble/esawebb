@@ -7,6 +7,8 @@ from django.db.models import Q
 
 from djangoplicity.pages.models import Page
 from .serializers import PageRagFeedSerializer
+from djangoplicity.releases.models import Release
+from .serializers import ReleaseRagFeedSerializer
 
 class RagFeedPagination(PageNumberPagination):
     """
@@ -34,3 +36,21 @@ class PageListAPIView(ListAPIView):
             (Q(start_publishing__isnull=True) | Q(start_publishing__lte=now)) &
             (Q(end_publishing__isnull=True) | Q(end_publishing__gte=now))
         ).order_by('-last_modified')
+
+class ReleaseListAPIView(ListAPIView):
+    """
+    View to expose the content of public Press Releases.
+    """
+    serializer_class = ReleaseRagFeedSerializer
+    pagination_class = RagFeedPagination
+
+    def get_queryset(self):
+        """
+        Filters to return only published releases that have
+        passed their release date (embargo).
+        """
+        now = timezone.now()
+        return Release.objects.filter(
+            Q(published=True) &
+            (Q(release_date__isnull=True) | Q(release_date__lte=now))
+        ).order_by('-release_date')
