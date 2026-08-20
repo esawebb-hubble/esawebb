@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from djangoplicity.pages.models import Page
 from djangoplicity.releases.models import Release
 from djangoplicity.announcements.models import Announcement
+from djangoplicity.newsletters.models import Newsletter
 
 class RagFeedBaseSerializer(serializers.ModelSerializer):
     """
@@ -85,5 +86,32 @@ class AnnouncementRagFeedSerializer(RagFeedBaseSerializer):
         html_content = getattr(obj, 'description', '')
         if html_content:
             soup = BeautifulSoup(html_content, 'html.parser')
+            return soup.get_text(separator=' ', strip=True)
+        return ''
+
+
+class NewsletterRagFeedSerializer(RagFeedBaseSerializer):
+    """
+    Serializer for the Newsletter model.
+    """
+    # Newsletters use 'subject' instead of 'title'
+    title = serializers.CharField(source='subject')
+    date_created = serializers.DateTimeField(source='release_date')
+
+    class Meta(RagFeedBaseSerializer.Meta):
+        model = Newsletter
+        fields = RagFeedBaseSerializer.Meta.fields
+
+    def get_text_content(self, obj):
+        """
+        Extracts and cleans HTML content.
+        Prioritizes the 'html' field, falls back to 'text' if empty.
+        """
+        content = getattr(obj, 'html', '')
+        if not content:
+            content = getattr(obj, 'text', '')
+
+        if content:
+            soup = BeautifulSoup(content, 'html.parser')
             return soup.get_text(separator=' ', strip=True)
         return ''

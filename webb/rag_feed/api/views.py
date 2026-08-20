@@ -11,6 +11,8 @@ from djangoplicity.releases.models import Release
 from .serializers import ReleaseRagFeedSerializer
 from djangoplicity.announcements.models import Announcement
 from .serializers import AnnouncementRagFeedSerializer
+from djangoplicity.newsletters.models import Newsletter
+from .serializers import NewsletterRagFeedSerializer
 
 class RagFeedPagination(PageNumberPagination):
     """
@@ -71,6 +73,24 @@ class AnnouncementListAPIView(ListAPIView):
         """
         now = timezone.now()
         return Announcement.objects.filter(
+            Q(published=True) &
+            (Q(release_date__isnull=True) | Q(release_date__lte=now))
+        ).order_by('-release_date')
+
+class NewsletterListAPIView(ListAPIView):
+    """
+    View to expose the content of public Newsletters.
+    """
+    serializer_class = NewsletterRagFeedSerializer
+    pagination_class = RagFeedPagination
+
+    def get_queryset(self):
+        """
+        Filters the queryset to return only published newsletters
+        that have passed their release date.
+        """
+        now = timezone.now()
+        return Newsletter.objects.filter(
             Q(published=True) &
             (Q(release_date__isnull=True) | Q(release_date__lte=now))
         ).order_by('-release_date')
