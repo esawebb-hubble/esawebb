@@ -17,6 +17,8 @@ from djangoplicity.science.models import ScienceAnnouncement
 from .serializers import ScienceAnnouncementRagFeedSerializer
 from djangoplicity.products2.models import Book, Brochure
 from .serializers import ProductRagFeedSerializer
+from djangoplicity.media.models import Image, PictureOfTheWeek, ImageComparison, Video
+from .serializers import ImageRagFeedSerializer, POTWRagFeedSerializer, ImageComparisonRagFeedSerializer, VideoRagFeedSerializer
 
 class RagFeedPagination(PageNumberPagination):
     """
@@ -113,6 +115,82 @@ class ScienceAnnouncementListAPIView(ListAPIView):
         """
         now = timezone.now()
         return ScienceAnnouncement.objects.filter(
+            Q(published=True) &
+            (Q(release_date__isnull=True) | Q(release_date__lte=now))
+        ).order_by('-release_date')
+
+class ImageListAPIView(ListAPIView):
+    """
+    View to expose the content of public Images.
+    """
+    serializer_class = ImageRagFeedSerializer
+    pagination_class = RagFeedPagination
+
+    def get_queryset(self):
+        """
+        Filters the queryset to return only published images
+        that have passed their release date (embargo).
+        """
+        now = timezone.now()
+        return Image.objects.filter(
+            Q(published=True) &
+            (Q(release_date__isnull=True) | Q(release_date__lte=now))
+        ).order_by('-release_date')
+
+
+class POTWListAPIView(ListAPIView):
+    """
+    View to expose the content of public Pictures of the Week / Month.
+    """
+    serializer_class = POTWRagFeedSerializer
+    pagination_class = RagFeedPagination
+
+    def get_queryset(self):
+        """
+        Filters the queryset to return only published POTWs
+        that have passed their release date (embargo).
+        """
+        now = timezone.now()
+
+        # We also use select_related to optimize the database query,
+        # since we know the serializer will need to access the related visual.
+        return PictureOfTheWeek.objects.filter(
+            Q(published=True) &
+            (Q(release_date__isnull=True) | Q(release_date__lte=now))
+        ).select_related('image', 'video', 'comparison').order_by('-release_date')
+
+class ImageComparisonListAPIView(ListAPIView):
+    """
+    View to expose the content of public Image Comparisons.
+    """
+    serializer_class = ImageComparisonRagFeedSerializer
+    pagination_class = RagFeedPagination
+
+    def get_queryset(self):
+        """
+        Filters the queryset to return only published image comparisons
+        that have passed their release date (embargo).
+        """
+        now = timezone.now()
+        return ImageComparison.objects.filter(
+            Q(published=True) &
+            (Q(release_date__isnull=True) | Q(release_date__lte=now))
+        ).order_by('-release_date')
+
+class VideoListAPIView(ListAPIView):
+    """
+    View to expose the content of public Videos.
+    """
+    serializer_class = VideoRagFeedSerializer
+    pagination_class = RagFeedPagination
+
+    def get_queryset(self):
+        """
+        Filters the queryset to return only published videos
+        that have passed their release date (embargo).
+        """
+        now = timezone.now()
+        return Video.objects.filter(
             Q(published=True) &
             (Q(release_date__isnull=True) | Q(release_date__lte=now))
         ).order_by('-release_date')

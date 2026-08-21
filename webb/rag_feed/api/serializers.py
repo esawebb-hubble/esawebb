@@ -7,6 +7,7 @@ from djangoplicity.releases.models import Release
 from djangoplicity.announcements.models import Announcement
 from djangoplicity.newsletters.models import Newsletter
 from djangoplicity.science.models import ScienceAnnouncement
+from djangoplicity.media.models import Image, PictureOfTheWeek, ImageComparison, Video
 
 class RagFeedBaseSerializer(serializers.ModelSerializer):
     """
@@ -126,6 +127,107 @@ class ScienceAnnouncementRagFeedSerializer(RagFeedBaseSerializer):
 
     class Meta(RagFeedBaseSerializer.Meta):
         model = ScienceAnnouncement
+        fields = RagFeedBaseSerializer.Meta.fields
+
+    def get_text_content(self, obj):
+        """
+        Extracts and cleans HTML content from the 'description' field.
+        """
+        html_content = getattr(obj, 'description', '')
+        if html_content:
+            soup = BeautifulSoup(html_content, 'html.parser')
+            return soup.get_text(separator=' ', strip=True)
+        return ''
+
+class ImageRagFeedSerializer(RagFeedBaseSerializer):
+    """
+    Serializer for the Image model in the media application.
+    """
+    # Images use release_date as their main publication/creation date
+    date_created = serializers.DateTimeField(source='release_date')
+
+    class Meta(RagFeedBaseSerializer.Meta):
+        model = Image
+        fields = RagFeedBaseSerializer.Meta.fields
+
+    def get_text_content(self, obj):
+        """
+        Extracts and cleans HTML content from the 'description' field.
+        """
+        html_content = getattr(obj, 'description', '')
+        if html_content:
+            soup = BeautifulSoup(html_content, 'html.parser')
+            return soup.get_text(separator=' ', strip=True)
+        return ''
+
+
+class POTWRagFeedSerializer(RagFeedBaseSerializer):
+    """
+    Serializer for the PictureOfTheWeek (POTW / POTM) model.
+    POTW acts as a wrapper, so we extract text and title from its related visual.
+    """
+    date_created = serializers.DateTimeField(source='release_date')
+
+    # We must explicitly define title because POTW relies on its visual for it
+    title = serializers.SerializerMethodField()
+
+    class Meta(RagFeedBaseSerializer.Meta):
+        model = PictureOfTheWeek
+        fields = RagFeedBaseSerializer.Meta.fields
+
+    def get_title(self, obj):
+        """
+        Retrieves the title from the associated visual (Image, Video, or Comparison).
+        """
+        visual = obj.visual()
+        if visual and hasattr(visual, 'title'):
+            return visual.title
+        return obj.id  # Fallback to ID if no title is found
+
+    def get_text_content(self, obj):
+        """
+        Extracts and cleans HTML content from the description of the associated visual.
+        """
+        visual = obj.visual()
+        if not visual:
+            return ''
+
+        html_content = getattr(visual, 'description', '')
+        if html_content:
+            soup = BeautifulSoup(html_content, 'html.parser')
+            return soup.get_text(separator=' ', strip=True)
+        return ''
+
+class ImageComparisonRagFeedSerializer(RagFeedBaseSerializer):
+    """
+    Serializer for the ImageComparison model.
+    """
+    # Image comparisons use release_date as their main publication/creation date
+    date_created = serializers.DateTimeField(source='release_date')
+
+    class Meta(RagFeedBaseSerializer.Meta):
+        model = ImageComparison
+        fields = RagFeedBaseSerializer.Meta.fields
+
+    def get_text_content(self, obj):
+        """
+        Extracts and cleans HTML content from the 'description' field.
+        """
+        html_content = getattr(obj, 'description', '')
+        if html_content:
+            soup = BeautifulSoup(html_content, 'html.parser')
+            return soup.get_text(separator=' ', strip=True)
+        return ''
+
+class VideoRagFeedSerializer(RagFeedBaseSerializer):
+    """
+    Serializer for the Video model.
+    """
+    # Videos use release_date as their main publication/creation date
+    date_created = serializers.DateTimeField(source='release_date')
+
+    class Meta(RagFeedBaseSerializer.Meta):
+        model = Video
         fields = RagFeedBaseSerializer.Meta.fields
 
     def get_text_content(self, obj):
