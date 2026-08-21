@@ -13,6 +13,10 @@ from djangoplicity.announcements.models import Announcement
 from .serializers import AnnouncementRagFeedSerializer
 from djangoplicity.newsletters.models import Newsletter
 from .serializers import NewsletterRagFeedSerializer
+from djangoplicity.science.models import ScienceAnnouncement
+from .serializers import ScienceAnnouncementRagFeedSerializer
+from djangoplicity.products2.models import Book, Brochure
+from .serializers import ProductRagFeedSerializer
 
 class RagFeedPagination(PageNumberPagination):
     """
@@ -94,3 +98,56 @@ class NewsletterListAPIView(ListAPIView):
             Q(published=True) &
             (Q(release_date__isnull=True) | Q(release_date__lte=now))
         ).order_by('-release_date')
+
+class ScienceAnnouncementListAPIView(ListAPIView):
+    """
+    View to expose the content of public Science Announcements.
+    """
+    serializer_class = ScienceAnnouncementRagFeedSerializer
+    pagination_class = RagFeedPagination
+
+    def get_queryset(self):
+        """
+        Filters the queryset to return only published science announcements
+        that have passed their release date (embargo).
+        """
+        now = timezone.now()
+        return ScienceAnnouncement.objects.filter(
+            Q(published=True) &
+            (Q(release_date__isnull=True) | Q(release_date__lte=now))
+        ).order_by('-release_date')
+
+class BaseProductListAPIView(ListAPIView):
+    """
+    Abstract base view for all Product models to avoid repeating queryset logic.
+    """
+    serializer_class = ProductRagFeedSerializer
+    pagination_class = RagFeedPagination
+
+    # This must be defined in child classes
+    model_class = None
+
+    def get_queryset(self):
+        """
+        Filters the queryset for published items that have passed their embargo.
+        """
+        if not self.model_class:
+            return []
+
+        now = timezone.now()
+        return self.model_class.objects.filter(
+            Q(published=True) &
+            (Q(release_date__isnull=True) | Q(release_date__lte=now))
+        ).order_by('-release_date')
+
+
+# --- Specific Product Endpoints ---
+
+class BookListAPIView(BaseProductListAPIView):
+    """ View for Books """
+    model_class = Book
+
+
+class BrochureListAPIView(BaseProductListAPIView):
+    """ View for Brochures """
+    model_class = Brochure

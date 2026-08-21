@@ -6,6 +6,7 @@ from djangoplicity.pages.models import Page
 from djangoplicity.releases.models import Release
 from djangoplicity.announcements.models import Announcement
 from djangoplicity.newsletters.models import Newsletter
+from djangoplicity.science.models import ScienceAnnouncement
 
 class RagFeedBaseSerializer(serializers.ModelSerializer):
     """
@@ -113,5 +114,47 @@ class NewsletterRagFeedSerializer(RagFeedBaseSerializer):
 
         if content:
             soup = BeautifulSoup(content, 'html.parser')
+            return soup.get_text(separator=' ', strip=True)
+        return ''
+
+class ScienceAnnouncementRagFeedSerializer(RagFeedBaseSerializer):
+    """
+    Serializer for the ScienceAnnouncement model.
+    """
+    # Use release_date as the creation date
+    date_created = serializers.DateTimeField(source='release_date')
+
+    class Meta(RagFeedBaseSerializer.Meta):
+        model = ScienceAnnouncement
+        fields = RagFeedBaseSerializer.Meta.fields
+
+    def get_text_content(self, obj):
+        """
+        Extracts and cleans HTML content from the 'description' field.
+        """
+        html_content = getattr(obj, 'description', '')
+        if html_content:
+            soup = BeautifulSoup(html_content, 'html.parser')
+            return soup.get_text(separator=' ', strip=True)
+        return ''
+
+class ProductRagFeedSerializer(RagFeedBaseSerializer):
+    """
+    Generic serializer for Product models inheriting from StandardArchiveInfo.
+    """
+    # Products use release_date as their main publication date
+    date_created = serializers.DateTimeField(source='release_date')
+
+    # We don't define a Meta class with a specific model here,
+    # as this serializer will be reused across multiple product models.
+    title = serializers.CharField()
+
+    def get_text_content(self, obj):
+        """
+        Extracts and cleans HTML content from the 'description' field.
+        """
+        html_content = getattr(obj, 'description', '')
+        if html_content:
+            soup = BeautifulSoup(html_content, 'html.parser')
             return soup.get_text(separator=' ', strip=True)
         return ''
