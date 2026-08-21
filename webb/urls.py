@@ -171,6 +171,9 @@ urlpatterns += [
     # ESASky API for JSONFeed
     url(r'^zoomables/$', ESASkyListView.as_view()),
 
+    # RAG Feed API
+    url(r'^api/rag/', include('webb.rag_feed.api.urls')),
+
     # Sitemap
     url(r'^sitemap/$', sitemap),
 
