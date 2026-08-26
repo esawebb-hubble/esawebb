@@ -6,7 +6,7 @@
         <li class="nav-item me-3 py-2 {% if entry.children|length %} dropdown {% endif %}">
             {% if entry.children|length %}
                 <a class="nav-link dropdown-toggle text-white"
-                   aria-current="page" aria-expanded="false" href="{{ entry.link|default:"#" }}"
+                   {% if entry.selected %}aria-current="page"{% endif %} aria-expanded="false" href="{{ entry.link|default:"#" }}"
                     {% if entry.on_click %} target="_blank" rel="noopener" {% endif %} style="font-size: 1rem !important;">
                     {% trans entry.title|safe %}
                 </a>
