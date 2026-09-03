@@ -82,6 +82,50 @@ function onVrViewLoad() {
         $('input[name=survey]').change(function() {
             aladin.setImageSurvey($(this).val());
         });
+        function fixAladinAccessibility() {
+            $('#aladin-lite-div img').each(function() {
+                var $img = $(this);
+                var $btn = $img.closest('button, .aladin-btn');
+
+                if ($btn.length > 0) {
+                    var $tooltip = $btn.find('.aladin-tooltip');
+                    if ($tooltip.length === 0) $tooltip = $btn.siblings('.aladin-tooltip');
+                    if ($tooltip.length === 0) $tooltip = $btn.parent().find('.aladin-tooltip');
+
+                    var tooltipText = $tooltip.text().trim();
+
+                    if (tooltipText) {
+                        $img.attr('alt', tooltipText);
+                        $tooltip.attr('aria-hidden', 'true');
+                    } else {
+                        var btnText = $btn.text().trim();
+                        if (btnText) {
+                            $img.attr('alt', '');
+                        } else {
+                            $img.attr('alt', 'Interactive control');
+                        }
+                    }
+                } else {
+                    $img.attr('alt', '');
+                }
+            });
+        }
+        fixAladinAccessibility();
+        var observer = new MutationObserver(function(mutations) {
+            var needsFix = false;
+            mutations.forEach(function(mutation) {
+                if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+                    needsFix = true;
+                }
+            });
+            if (needsFix) {
+                fixAladinAccessibility();
+            }
+        });
+        var targetNode = document.getElementById('aladin-lite-div');
+        if (targetNode) {
+            observer.observe(targetNode, { childList: true, subtree: true });
+        }
     });
 }
 

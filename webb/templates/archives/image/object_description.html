@@ -41,7 +41,17 @@
     $(document).ready(function ($) {
         $('.popup-link').magnificPopup({
             delegate: 'a',
-            type: 'image'
+            type: 'image',
+            callbacks: {
+                open: function() {
+                    var title = this.currItem.el.attr('title') || 'Image viewer';
+                    this.wrap.attr({
+                        'role': 'dialog',
+                        'aria-modal': 'true',
+                        'aria-label': 'Image dialog: ' + title
+                    });
+                }
+            }
         });
     })
 </script>
