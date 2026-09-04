@@ -6,19 +6,12 @@ from django.utils import timezone
 from django.db.models import Q
 
 from djangoplicity.pages.models import Page
-from .serializers import PageRagFeedSerializer
 from djangoplicity.releases.models import Release
-from .serializers import ReleaseRagFeedSerializer
 from djangoplicity.announcements.models import Announcement
-from .serializers import AnnouncementRagFeedSerializer
 from djangoplicity.newsletters.models import Newsletter
-from .serializers import NewsletterRagFeedSerializer
 from djangoplicity.science.models import ScienceAnnouncement
-from .serializers import ScienceAnnouncementRagFeedSerializer
-from djangoplicity.products2.models import Book, Brochure
-from .serializers import ProductRagFeedSerializer
 from djangoplicity.media.models import Image, PictureOfTheWeek, ImageComparison, Video
-from .serializers import ImageRagFeedSerializer, POTWRagFeedSerializer, ImageComparisonRagFeedSerializer, VideoRagFeedSerializer
+from .serializers import *
 
 class RagFeedPagination(PageNumberPagination):
     """
@@ -222,10 +215,73 @@ class BaseProductListAPIView(ListAPIView):
 # --- Specific Product Endpoints ---
 
 class BookListAPIView(BaseProductListAPIView):
-    """ View for Books """
     model_class = Book
-
+    serializer_class = BookRagFeedSerializer
 
 class BrochureListAPIView(BaseProductListAPIView):
-    """ View for Brochures """
     model_class = Brochure
+    serializer_class = BrochureRagFeedSerializer
+
+class Model3dListAPIView(BaseProductListAPIView):
+    model_class = Model3d
+    serializer_class = Model3dRagFeedSerializer
+
+class ApplicationListAPIView(BaseProductListAPIView):
+    model_class = Application
+    serializer_class = ApplicationRagFeedSerializer
+
+class CalendarListAPIView(BaseProductListAPIView):
+    model_class = Calendar
+    serializer_class = CalendarRagFeedSerializer
+
+class ConferencePosterListAPIView(BaseProductListAPIView):
+    model_class = ConferencePoster
+    serializer_class = ConferencePosterRagFeedSerializer
+
+class ExhibitionListAPIView(BaseProductListAPIView):
+    model_class = Exhibition
+    serializer_class = ExhibitionRagFeedSerializer
+
+class FITSImageListAPIView(BaseProductListAPIView):
+    model_class = FITSImage
+    serializer_class = FITSImageRagFeedSerializer
+
+class LogoListAPIView(BaseProductListAPIView):
+    model_class = Logo
+    serializer_class = LogoRagFeedSerializer
+
+class MediaProductListAPIView(BaseProductListAPIView):
+    model_class = Media
+    serializer_class = MediaProductRagFeedSerializer
+
+class MerchandiseListAPIView(BaseProductListAPIView):
+    model_class = Merchandise
+    serializer_class = MerchandiseRagFeedSerializer
+
+class PostCardListAPIView(BaseProductListAPIView):
+    model_class = PostCard
+    serializer_class = PostCardRagFeedSerializer
+
+class PresentationListAPIView(BaseProductListAPIView):
+    model_class = Presentation
+    serializer_class = PresentationRagFeedSerializer
+
+class PressKitListAPIView(BaseProductListAPIView):
+    model_class = PressKit
+    serializer_class = PressKitRagFeedSerializer
+
+class PrintedPosterListAPIView(BaseProductListAPIView):
+    model_class = PrintedPoster
+    serializer_class = PrintedPosterRagFeedSerializer
+
+class OnlineArtListAPIView(BaseProductListAPIView):
+    model_class = OnlineArt
+    serializer_class = OnlineArtRagFeedSerializer
+
+class StickerListAPIView(BaseProductListAPIView):
+    model_class = Sticker
+    serializer_class = StickerRagFeedSerializer
+
+class VideoConferenceBackgroundListAPIView(BaseProductListAPIView):
+    model_class = VideoConferenceBackground
+    serializer_class = VideoConferenceBackgroundRagFeedSerializer
