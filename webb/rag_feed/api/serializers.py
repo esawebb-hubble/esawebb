@@ -8,6 +8,11 @@ from djangoplicity.announcements.models import Announcement
 from djangoplicity.newsletters.models import Newsletter
 from djangoplicity.science.models import ScienceAnnouncement
 from djangoplicity.media.models import Image, PictureOfTheWeek, ImageComparison, Video
+from djangoplicity.products2.models import (
+    Book, Brochure, Model3d, Application, Calendar, ConferencePoster, Exhibition,
+    FITSImage, Logo, Media, Merchandise, PostCard, Presentation,
+    PressKit, PrintedPoster, OnlineArt, Sticker, VideoConferenceBackground
+)
 
 class RagFeedBaseSerializer(serializers.ModelSerializer):
     """
@@ -260,3 +265,57 @@ class ProductRagFeedSerializer(RagFeedBaseSerializer):
             soup = BeautifulSoup(html_content, 'html.parser')
             return soup.get_text(separator=' ', strip=True)
         return ''
+
+class BookRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(RagFeedBaseSerializer.Meta): model = Book
+
+class BrochureRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(RagFeedBaseSerializer.Meta): model = Brochure
+
+class Model3dRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(ProductRagFeedSerializer.Meta): model = Model3d
+
+class ApplicationRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(ProductRagFeedSerializer.Meta): model = Application
+
+class CalendarRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(ProductRagFeedSerializer.Meta): model = Calendar
+
+class ConferencePosterRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(ProductRagFeedSerializer.Meta): model = ConferencePoster
+
+class ExhibitionRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(ProductRagFeedSerializer.Meta): model = Exhibition
+
+class FITSImageRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(ProductRagFeedSerializer.Meta): model = FITSImage
+
+class LogoRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(ProductRagFeedSerializer.Meta): model = Logo
+
+class MediaProductRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(ProductRagFeedSerializer.Meta): model = Media
+
+class MerchandiseRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(ProductRagFeedSerializer.Meta): model = Merchandise
+
+class PostCardRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(ProductRagFeedSerializer.Meta): model = PostCard
+
+class PresentationRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(ProductRagFeedSerializer.Meta): model = Presentation
+
+class PressKitRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(ProductRagFeedSerializer.Meta): model = PressKit
+
+class PrintedPosterRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(ProductRagFeedSerializer.Meta): model = PrintedPoster
+
+class OnlineArtRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(ProductRagFeedSerializer.Meta): model = OnlineArt
+
+class StickerRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(ProductRagFeedSerializer.Meta): model = Sticker
+
+class VideoConferenceBackgroundRagFeedSerializer(ProductRagFeedSerializer):
+    class Meta(ProductRagFeedSerializer.Meta): model = VideoConferenceBackground
