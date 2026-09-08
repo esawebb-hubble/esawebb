@@ -62,8 +62,8 @@ RUN apt-get update && apt-get install -y \
 RUN echo "Europe/Berlin" > /etc/timezone && \
     rm /etc/localtime && \
     ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime
-ENV LANG en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
 
 RUN groupadd -g 2000 webbadm && \
     useradd -u 2000 -g webbadm --create-home webbadm
