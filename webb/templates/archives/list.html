@@ -42,8 +42,7 @@
             {% block content %}
                 <h1>
                     {% if archive_title %}
-                        {% if archive_title == 'Picture of the Week' %} Picture of the Month
-                        {% elif archive_title == 'Video Conference Backgrounds' %} Virtual Meeting Backgrounds
+                        {% if archive_title == 'Video Conference Backgrounds' %} Virtual Meeting Backgrounds
                         {% else %}
                             {% trans archive_title %}
                         {% endif %}
